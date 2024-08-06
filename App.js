@@ -1,4 +1,5 @@
 import "react-native-gesture-handler";
+import { Text } from "react-native";
 import { useState } from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { NavigationContainer } from "@react-navigation/native";

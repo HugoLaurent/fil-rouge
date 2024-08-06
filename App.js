@@ -6,20 +6,50 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import { Login } from "./src/surfaces/Login";
 import { Feed } from "./src/surfaces/Feed";
+import { Conversations } from "./src/surfaces/Conversations";
+import { AddPost } from "./src/surfaces/AddPost";
+import { Favorites } from "./src/surfaces/Favorites";
+import { Profile } from "./src/surfaces/Profile";
+
+import { Ionicons } from "@expo/vector-icons";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 function Home() {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName;
+          if (route.name === "Feed") {
+            iconName = focused ? "home" : "home-outline";
+          } else if (route.name === "Conversations") {
+            iconName = focused ? "chatbox" : "chatbox-outline";
+          } else if (route.name === "AddPost") {
+            iconName = focused ? "add-circle" : "add-circle-outline";
+          } else if (route.name === "Favorites") {
+            iconName = focused ? "heart" : "heart-outline";
+          } else if (route.name === "Profile") {
+            iconName = focused ? "person" : "person-outline";
+          }
+          return <Ionicons name={iconName} size={size} color={color} />;
+        },
+        tabBarActiveTintColor: "#25A0B0",
+        tabBarInactiveTintColor: "#000",
+      })}
+    >
       <Tab.Screen name="Feed" component={Feed} />
+      <Tab.Screen name="Conversations" component={Conversations} />
+      <Tab.Screen name="AddPost" component={AddPost} />
+      <Tab.Screen name="Favorites" component={Favorites} />
+      <Tab.Screen name="Profile" component={Profile} />
     </Tab.Navigator>
   );
 }
 
 export default function App() {
-  const [userLoggedIn, setUserLoggedIn] = useState(false);
+  const [userLoggedIn, setUserLoggedIn] = useState(true);
 
   return (
     <NavigationContainer>
@@ -30,7 +60,7 @@ export default function App() {
           <Stack.Screen
             name="Home"
             component={Home}
-            option={{ headerShown: false }}
+            options={{ headerShown: false }}
           />
         )}
       </Stack.Navigator>

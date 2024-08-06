@@ -2,7 +2,6 @@
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { AddPost } from "./AddPost";
-import { Conversations } from "./Conversations";
 import { Favorites } from "./Favorites";
 import { Feed } from "./Feed";
 import { Profile } from "./Profile";
@@ -52,7 +51,7 @@ export const Home = () => {
         listeners={({ navigation }) => ({
           tabPress: (e) => {
             e.preventDefault();
-            navigation.navigate("ConversationsNav");
+            navigation.navigate("ConversationNav");
           },
         })}
       />

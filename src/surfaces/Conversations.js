@@ -6,7 +6,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import { ListOfConvos } from "../components/ListOfConvos";
 import { TextInput } from "react-native-gesture-handler";
 
-export const Conversations = () => {
+export const Conversations = ({ navigation }) => {
   const headerHeight = useHeaderHeight();
   const [text, onChangeText] = useState();
   return (

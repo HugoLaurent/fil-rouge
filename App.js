@@ -1,5 +1,7 @@
 import "react-native-gesture-handler";
 import { useState } from "react";
+import { Ionicons } from "@expo/vector-icons";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -10,8 +12,6 @@ import { Conversations } from "./src/surfaces/Conversations";
 import { AddPost } from "./src/surfaces/AddPost";
 import { Favorites } from "./src/surfaces/Favorites";
 import { Profile } from "./src/surfaces/Profile";
-
-import { Ionicons } from "@expo/vector-icons";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -52,18 +52,20 @@ export default function App() {
   const [userLoggedIn, setUserLoggedIn] = useState(true);
 
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        {!userLoggedIn ? (
-          <Stack.Screen name="Login" component={Login} />
-        ) : (
-          <Stack.Screen
-            name="Home"
-            component={Home}
-            options={{ headerShown: false }}
-          />
-        )}
-      </Stack.Navigator>
-    </NavigationContainer>
+    <SafeAreaProvider>
+      <NavigationContainer>
+        <Stack.Navigator>
+          {!userLoggedIn ? (
+            <Stack.Screen name="Login" component={Login} />
+          ) : (
+            <Stack.Screen
+              name="Home"
+              component={Home}
+              options={{ headerShown: false }}
+            />
+          )}
+        </Stack.Navigator>
+      </NavigationContainer>
+    </SafeAreaProvider>
   );
 }

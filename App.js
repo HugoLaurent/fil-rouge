@@ -5,6 +5,12 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { AppLoading } from "expo-app-loading";
+import {
+  useFonts,
+  Poppins_400Regular,
+  Poppins_700Bold,
+} from "@expo-google-fonts/poppins";
 
 import { Login } from "./src/surfaces/Login";
 import { Feed } from "./src/surfaces/Feed";
@@ -37,6 +43,14 @@ function Home() {
         },
         tabBarActiveTintColor: "#25A0B0",
         tabBarInactiveTintColor: "#000",
+        headerTransparent: true,
+        headerTitleAlign: "right",
+        headerTitleStyle: {
+          paddingTop: 140,
+          paddingBottom: 40,
+          textAlign: "left",
+          fontWeight: "bold",
+        },
       })}
     >
       <Tab.Screen name="Feed" component={Feed} />
@@ -50,6 +64,14 @@ function Home() {
 
 export default function App() {
   const [userLoggedIn, setUserLoggedIn] = useState(true);
+  let [fontsLoaded] = useFonts({
+    Poppins_400Regular,
+    Poppins_700Bold,
+  });
+
+  if (!fontsLoaded) {
+    return <AppLoading />;
+  }
 
   return (
     <SafeAreaProvider>

@@ -1,69 +1,46 @@
-import { Image, View } from "react-native";
+import { Text, Image, View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
+import { Card } from "../components/Card";
+import { requestBase } from "../utils/constants";
+import { useState, useEffect } from "react";
 
 export const ListOfCards = () => {
-  const renderItem = ({ item }) => {
+  const [cardList, setCardList] = useState(null);
+
+  async function fetchCardData(id) {
+    try {
+      const response = await fetch(`${requestBase}/home.json`);
+      const data = await response.json();
+      console.log("data json ok => " + JSON.stringify(data));
+
+      setCardList(data);
+    } catch (error) {
+      console.log("listcard fetch error" + error.message);
+    }
+  }
+
+  useEffect(() => {
+    fetchCardData();
+  }, []);
+
+  if (!cardList) {
     return (
-      <Image
-        style={{
-          width: "100%",
-          height: 288,
-          borderRadius: 20,
-          marginBottom: 32,
-        }}
-        source={{ uri: item.url }}
-      />
+      <View>
+        <Text>Loading Data...</Text>
+      </View>
     );
+  }
+
+  const renderItem = ({ item }) => {
+    return <Card item={item} />;
   };
-  const arrayOfImages = [
-    {
-      itemId: 101,
-      authorId: 11,
-      timestamp: "2 hrs ago",
-      url: "https://picsum.photos/200/300",
-      likes: "20",
-      conversation: "12",
-    },
-    {
-      itemId: 102,
-      authorId: 12,
-      timestamp: "3 hrs ago",
-      url: "https://picsum.photos/200/301",
-      likes: "30",
-      conversation: "13",
-    },
-    {
-      itemId: 103,
-      authorId: 13,
-      timestamp: "4 hrs ago",
-      url: "https://picsum.photos/200/302",
-      likes: "40",
-      conversation: "14",
-    },
-    {
-      itemId: 104,
-      authorId: 14,
-      timestamp: "5 hrs ago",
-      url: "https://picsum.photos/201/300",
-      likes: "50",
-      conversation: "15",
-    },
-    {
-      itemId: 105,
-      authorId: 15,
-      timestamp: "6 hrs ago",
-      url: "https://picsum.photos/202/300",
-      likes: "60",
-      conversation: "16",
-    },
-  ];
 
   return (
-    <View style={{ paddingVertical: 30 }}>
+    <View style={{ marginTop: 2, paddingHorizontal: 20, marginBottom: 160 }}>
       <FlatList
-        data={arrayOfImages}
+        data={cardList}
         renderItem={renderItem}
-        keyExtractor={(item) => item.itemId.toString()}
+        keyExtractor={(item) => item.itemId}
         showsVerticalScrollIndicator={false}
       />
     </View>

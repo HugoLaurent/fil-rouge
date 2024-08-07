@@ -1,4 +1,4 @@
-import { Wiew, FlatList, Image, useWindowDimensions } from "react-native";
+import { View, Image, useWindowDimensions, FlatList, Text } from "react-native";
 
 const arrayOfImages = [
   {
@@ -48,12 +48,11 @@ export const FavoritedImages = () => {
         paddingTop: 20,
       }}
     >
+      <Text>Coucou</Text>
       <FlatList
         data={arrayOfImages}
         renderItem={renderItem}
         keyExtractor={(item) => item.id.toString()}
-        snapToInterval={240}
-        decelerationRate="fast"
         showsHorizontalScrollIndicator={false}
       />
     </View>

@@ -11,17 +11,17 @@ export const ProfileStatistics = () => {
         width: "100%",
       }}
     >
-      <View style={StyleSheet.general}>
-        <Text style={StyleSheet.headerText}>Posts</Text>
-        <Text style={StyleSheet.stats}> 35</Text>
+      <View style={styles.general}>
+        <Text style={styles.headerText}>Posts</Text>
+        <Text style={styles.stats}> 35</Text>
       </View>
-      <View style={StyleSheet.general}>
-        <Text style={StyleSheet.headerText}>Followers</Text>
-        <Text style={StyleSheet.stats}> 1,552</Text>
+      <View style={styles.general}>
+        <Text style={styles.headerText}>Followers</Text>
+        <Text style={styles.stats}> 1,552</Text>
       </View>
-      <View style={StyleSheet.general}>
-        <Text style={StyleSheet.headerText}>Follows</Text>
-        <Text style={StyleSheet.stats}>128 </Text>
+      <View style={styles.general}>
+        <Text style={styles.headerText}>Follows</Text>
+        <Text style={styles.stats}>128 </Text>
       </View>
     </View>
   );

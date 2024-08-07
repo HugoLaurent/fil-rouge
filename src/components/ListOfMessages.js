@@ -1,31 +1,25 @@
+import { useState, useEffect } from "react";
 import { View, FlatList, Text, StyleSheet } from "react-native";
+import { requestBase } from "../utils/constants";
 
-export const ListOfMessages = ({}) => {
-  const messages = {
-    id: 2,
-    messages: [
-      {
-        id: 1,
-        type: "to",
-        text: "Well, let me start by saying, for those of you who might be confused, I am not Ben Johnson. On the train ride from DC this morning, we passed through Baltimore",
-      },
-      {
-        id: 2,
-        type: "from",
-        text: "After the 2000 census, Representative Davis maneuvered to have his Congressional District gerrymandered to include as many Republicans as possible",
-      },
-      {
-        id: 3,
-        type: "from",
-        text: "Genetically advanced agriculture, anti-aging technology, and other advancements we've yet to see today will likely push our longevity even farther",
-      },
-      {
-        id: 4,
-        type: "to",
-        text: "dIt shouldn't be surprising, then, that many of the biggest proponents of banning performance enhancing drugs in sports are also suspect of some The Rosenkranz Foundation",
-      },
-    ],
-  };
+export const ListOfMessages = ({ conversationId }) => {
+  const [messages, setMessages] = useState({ messages: [] });
+
+  async function fetchMessages() {
+    const response = await fetch(
+      `${requestBase}/messages/${conversationId}.json`
+    );
+    const data = await response.json();
+    setMessages(data);
+  }
+
+  useEffect(() => {
+    fetchMessages();
+  }, []);
+
+  if (!messages) {
+    return <Text>Loading...</Text>;
+  }
 
   const renderItem = ({ item }) => (
     <View
@@ -37,6 +31,7 @@ export const ListOfMessages = ({}) => {
       <Text style={styles.messageText}>{item.text}</Text>
     </View>
   );
+
   return (
     <View style={{ paddingHorizontal: 20 }}>
       <FlatList

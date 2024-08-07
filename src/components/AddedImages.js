@@ -1,4 +1,4 @@
-import { Wiew, FlatList, Image, useWindowDimensions } from "react-native";
+import { View, FlatList, Image, useWindowDimensions } from "react-native";
 
 const arrayOfImages = [
   {

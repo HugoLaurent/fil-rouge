@@ -8,9 +8,7 @@ export const Feed = () => {
   const headerHeight = useHeaderHeight();
 
   return (
-    <SafeAreaView
-      style={{ flex: 1, paddingTop: headerHeight + 20, paddingHorizontal: 20 }}
-    >
+    <SafeAreaView style={{ flex: 1 }}>
       <View>
         <ListOfAvatars />
         <ListOfCards />

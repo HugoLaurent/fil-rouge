@@ -1,7 +1,8 @@
+import { useState, useEffect } from "react";
 import { View, FlatList } from "react-native";
-import { Card } from " .. /components/Card";
+import { Card } from "./Card";
 import AppLoading from "expo-app-loading";
-import { requestBase } from " .. /utils/constants";
+import { requestBase } from "../utils/constants";
 
 export const ListOfFavorites = () => {
   const [cardList, setCardList] = useState(null);

@@ -12,6 +12,10 @@ import {
   Poppins_700Bold,
 } from "@expo-google-fonts/poppins";
 
+import { store } from "./redux/store";
+import { Provider } from "react-redux";
+import { UserDetailsModal } from "./src/surfaces/UserDetailsModal";
+
 import { Home } from "./src/surfaces/Home";
 import { Login } from "./src/surfaces/Login";
 import { ConversationsNavigation } from "./src/surfaces/ConversationsNavigation";
@@ -55,26 +59,40 @@ export default function App(id) {
 
   return (
     <SafeAreaProvider>
-      <UserListContext.Provider value={{ userList: userList }}>
-        <NavigationContainer>
-          <Stack.Navigator>
-            {!userLoggedIn ? (
-              <Stack.Screen name="Login" component={Login} />
-            ) : (
-              <>
-                <Stack.Screen name="Home" options={{ headerShown: false }}>
-                  {(props) => <Home {...props} userList={userList} />}
-                </Stack.Screen>
+      <Provider store={store}>
+        <UserListContext.Provider value={{ userList: userList }}>
+          <NavigationContainer>
+            <Stack.Navigator>
+              <Stack.Group>
+                {!userLoggedIn ? (
+                  <Stack.Screen name="Login" component={Login} />
+                ) : (
+                  <>
+                    <Stack.Screen
+                      name="Home"
+                      options={{ headerShown: false }}
+                      component={Home}
+                    />
+
+                    <Stack.Screen
+                      name="ConversationNav"
+                      component={ConversationsNavigation}
+                      options={{ headerShown: false }}
+                    />
+                  </>
+                )}
+              </Stack.Group>
+              <Stack.Group screenOptions={{ presentation: "modal" }}>
                 <Stack.Screen
-                  name="ConversationNav"
-                  component={ConversationsNavigation}
+                  name="UserDetailsModal"
+                  component={UserDetailsModal}
                   options={{ headerShown: false }}
                 />
-              </>
-            )}
-          </Stack.Navigator>
-        </NavigationContainer>
-      </UserListContext.Provider>
+              </Stack.Group>
+            </Stack.Navigator>
+          </NavigationContainer>
+        </UserListContext.Provider>
+      </Provider>
     </SafeAreaProvider>
   );
 }

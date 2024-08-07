@@ -1,4 +1,4 @@
-// src/surfaces/Home.js
+import { useEffect } from "react";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { AddPost } from "./AddPost";
@@ -6,12 +6,19 @@ import { Favorites } from "./Favorites";
 import { Feed } from "./Feed";
 import { Profile } from "./Profile";
 import { View } from "react-native";
+import { fetchLikedImages } from "../api/fecthLikedImages";
+import { useDispatch } from "react-redux";
 
 const Tab = createBottomTabNavigator();
 
 const ConversationBase = () => <View style={{ flex: 1 }} />;
 
 export const Home = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchLikedImages());
+  }, []);
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({

@@ -3,24 +3,23 @@ import { View, FlatList } from "react-native";
 import { Card } from "./Card";
 import AppLoading from "expo-app-loading";
 import { requestBase } from "../utils/constants";
+import { useSelector } from "react-redux";
 
-export const ListOfFavorites = () => {
-  const [cardList, setCardList] = useState(null);
+export const ListOfFavorites = ({ navigation }) => {
+  const { likedImages } = useSelector((state) => state.likedImages);
+  const [imageList, setImageList] = useState([]);
 
-  async function fetchCardData() {
-    const response = await fetch(requestBase + "/home.json");
-    setCardList(await response.json());
+  if (!likedImages) {
+    return <AppLoading />;
   }
 
   useEffect(() => {
-    fetchCardData();
-  }, []);
+    const reversedImages = [...likedImages].reverse();
+    setImageList(reversedImages);
+  }, [likedImages]);
 
-  if (!cardList) {
-    return <AppLoading />;
-  }
   const renderItem = ({ item }) => {
-    return <Card item={item} />;
+    return <Card item={item} navigation={navigation} />;
   };
   return (
     <View
@@ -29,7 +28,7 @@ export const ListOfFavorites = () => {
       }}
     >
       <FlatList
-        data={cardList.reverse()}
+        data={imageList}
         renderItem={renderItem}
         keyExtractor={(item) => item.itemId}
         showsVerticalScrollIndicator={false}
